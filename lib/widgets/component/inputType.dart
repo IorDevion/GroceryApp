@@ -4,6 +4,7 @@ import '../../sizeConfig.dart';
 import '../../color.dart';
 
 class InputTypeForm extends StatelessWidget {
+
   final String name, hint;
   final bool isPassword;
   InputTypeForm({this.name,this.hint,this.isPassword});
@@ -34,7 +35,7 @@ class InputTypeForm extends StatelessWidget {
               hintStyle: TextStyle(
                 color: Color(hexColor('#C8C8FF'))
               ),
-              suffixIcon: name == 'Email' ? Icon(MyFlutterApp.mail) : Icon(MyFlutterApp.key),
+              suffixIcon: name == 'Email' ? Icon(MyFlutterApp.mail_1) : Icon(MyFlutterApp.key),
           floatingLabelBehavior: FloatingLabelBehavior.always,
         ),
       ),

@@ -12,13 +12,13 @@ class ButtonList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Color(hexColor('#aaa1ff')),
+        color: Color(hexColor('#6C63FF')),
         borderRadius: BorderRadius.circular(7)
       ),
       margin: EdgeInsets.only(right:getFlexibleWidth(20)),
       padding: EdgeInsets.symmetric(vertical:getFlexibleWidth(7),horizontal:getFlexibleHeight(7)),
-      child: Icon(MyFlutterApp.th_thumb,
-      color: Color(hexColor('#3621ff')),),
+      child: Icon(MyFlutterApp.logout,
+      color: Color(hexColor('#ffffff')),),
     );
   }
 }

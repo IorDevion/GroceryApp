@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../sizeConfig.dart';
 import './login.dart';
@@ -22,6 +23,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  SharedPreferences _pref;
+
   int currentPage = 0;
   PageController _controller = PageController(initialPage: 0);
   List<Map<String, String>> splashData = [
@@ -44,6 +47,20 @@ class _SplashScreenState extends State<SplashScreen> {
       "img": "asset/image/splash3.svg"
     },
   ];
+
+  @override
+  void initState() {
+    initPreferences().whenComplete(() {
+      setState(() {
+        
+      });
+    });
+    super.initState();
+  }
+  
+  Future<void> initPreferences () async{
+    _pref = await SharedPreferences.getInstance();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,8 +110,9 @@ class _SplashScreenState extends State<SplashScreen> {
                  if(currentPage == 1){
                   _controller.animateToPage(2, duration: Duration(milliseconds: 360), curve: Curves.easeInOut);
                   }
-                  if(currentPage == 2){
-                    Get.toNamed(LoginScreen.routeName);
+                  if(currentPage == 2) {
+                    Get.offNamed(LoginScreen.routeName);
+                    _pref.setString('splash', 'isi');
                   }
                 });
               },

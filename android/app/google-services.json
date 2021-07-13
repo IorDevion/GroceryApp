@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "803451553741",
+    "firebase_url": "https://groceryapp-85c1d-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "groceryapp-85c1d",
     "storage_bucket": "groceryapp-85c1d.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "803451553741-vquiepvun0oehpdi77pppl0l82429b9f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ricko.GroceryApp",
+            "certificate_hash": "6b602063919ea3454656b07d2092688b51c0ab90"
+          }
+        },
         {
           "client_id": "803451553741-rpn2gi2occjl6g1e2kc3vduggnu5jlue.apps.googleusercontent.com",
           "client_type": 3

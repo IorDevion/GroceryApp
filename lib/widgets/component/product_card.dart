@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:GroceryApp/color.dart';
 import 'package:GroceryApp/model/productItem.dart';
 import 'package:GroceryApp/widgets/icons/my_flutter_app_icons.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
@@ -9,8 +12,8 @@ import '../detail_product.dart';
 
 import '../../sizeConfig.dart';
 
-class ProductCard extends StatelessWidget {
-  const ProductCard({
+class ProductCard extends StatelessWidget { 
+  ProductCard({
     @required this.product,
     Key key,
   }) : super(key: key);
@@ -30,8 +33,8 @@ class ProductCard extends StatelessWidget {
             SizedBox(height: getFlexibleHeight(30)),
                 Container(
                     child: Center(
-                      child: Image.network(
-                        product.img,
+                      child: Image.file(
+                        File(product.img),
                         fit: BoxFit.fill,
                         width: getFlexibleWidth(70),
                         height: getFlexibleHeight(80),

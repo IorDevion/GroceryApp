@@ -1,11 +1,14 @@
 import 'package:GroceryApp/color.dart';
+import 'package:GroceryApp/widgets/icons/my_flutter_app_icons.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../widgets/component/buttonFav.dart';
+import 'package:GroceryApp/model/auth_Service.dart';
 import 'package:GroceryApp/sizeConfig.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-import './component/backButton.dart';
 import './component/button_list.dart';
 import './component/product_card.dart';
 
@@ -19,6 +22,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -36,11 +41,23 @@ class HomeContent extends StatefulWidget {
 }
 
 class _HomeContentState extends State<HomeContent> {
+    SharedPreferences _pref;
+  @override
+  void initState() {
+    initPref().whenComplete((){
+      setState(() {});
+    });
+    super.initState();
+  }
+  Future<void> initPref() async{
+    this._pref = await SharedPreferences.getInstance();
+  }
+
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference productItem = firestore.collection('productItem');
-    
+
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
@@ -48,9 +65,38 @@ class _HomeContentState extends State<HomeContent> {
             height: getFlexibleHeight(30),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              ButtonList(),
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+             IconButton(
+                onPressed: (){
+                  Get.toNamed('/profile');
+                },
+                icon: Icon(Icons.account_box),
+                iconSize: 37,
+                color: Color(hexColor('#6C63FF')),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {
+                      Get.toNamed('/fav');
+                    },
+                    child: ButtonFav(),
+                  ),
+                  SizedBox(
+                    width: getFlexibleWidth(20),
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      await AuthService.signOut();
+                      Get.offNamed('/login');
+                      _pref.remove('splash');            
+                    },
+                    child: ButtonList(),
+                  ),
+                ],
+              ),
             ],
           ),
           SizedBox(
@@ -125,17 +171,19 @@ class _HomeContentState extends State<HomeContent> {
                       itemBuilder: (BuildContext ctx, index) {
                         // print(snapshot.data.docs[index]['name']);
                         var product = snapshot.data.docs[index];
+                        var prodId = product.reference.path;
+                        var splitId = prodId.split('/').last;
                         return ProductCard(
                             product: new ProductItem(
                           name: product['name'],
                           price: product['price'],
                           desc: product['desc'],
                           img: product['img'],
-                          id: product['id'],
+                          id: splitId,
                         ));
                       },
                     );
-                  } else {
+                  }  else {
                     return Text('Loading...');
                   }
                 },

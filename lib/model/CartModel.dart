@@ -6,8 +6,9 @@ class AddtoCart {
       FirebaseFirestore.instance.collection('cartProduct');
 
   String name;
-  double price;
-  double total;
+  int price;
+  int total;
+  String img;
   int qty;
 
   AddtoCart({
@@ -15,6 +16,7 @@ class AddtoCart {
     @required this.price,
     @required this.total,
     @required this.qty,
+    @required this.img,
   });
 
   Future<void> addCart() {
@@ -24,6 +26,7 @@ class AddtoCart {
           'price': price,
           'total': total,
           'qty': qty,
+          'img':img,
         })
         .then((_) => print('Cart Added'))
         .catchError((_) => print('Error Bende'));
